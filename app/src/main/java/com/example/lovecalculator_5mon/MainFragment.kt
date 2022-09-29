@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
@@ -19,6 +21,7 @@ import retrofit2.Response
 
 class MainFragment : Fragment() {
     lateinit var binding: FragmentMainBinding
+    private val viewModel:LoveViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,24 +36,29 @@ class MainFragment : Fragment() {
     private fun initClicker() {
         with(binding){
             calculateBtn.setOnClickListener{
-                App.api.calculateLove(firstNameEd.text.toString(),secondNameEd.text.toString()).enqueue(object :
-                    retrofit2.Callback<LoveModel>{
-                    override fun onResponse(call: Call<LoveModel>, response: Response<LoveModel>) {
-                        if(response.isSuccessful){
-                            Log.e("raya","${response.body()?.percentage}")
-                            val loveModel=response.body()
-                            val bundle=Bundle()
-                            bundle.putSerializable("key",loveModel)
-                            findNavController().navigate(R.id.secondFragment,bundle)
-                            binding.firstNameEd.text.clear()
-                            binding.secondNameEd.text.clear()
-                        }}
 
-                    override fun onFailure(call: Call<LoveModel>, t: Throwable) {
-                        Log.e("raya","${t.message}")
-                    }
-
-                })
+                viewModel.getLiveLoveModel(firstNameEd.text.toString(),secondNameEd.text.toString()).observe(requireActivity(),
+                    Observer {
+                        binding.calculateBtn.text=it.percentage
+                    })
+//                App.api.calculateLove(firstNameEd.text.toString(),secondNameEd.text.toString()).enqueue(object :
+//                    retrofit2.Callback<LoveModel>{
+//                    override fun onResponse(call: Call<LoveModel>, response: Response<LoveModel>) {
+//                        if(response.isSuccessful){
+//                            Log.e("raya","${response.body()?.percentage}")
+//                            val loveModel=response.body()
+//                            val bundle=Bundle()
+//                            bundle.putSerializable("key",loveModel)
+//                            findNavController().navigate(R.id.secondFragment,bundle)
+//                            binding.firstNameEd.text.clear()
+//                            binding.secondNameEd.text.clear()
+//                        }}
+//
+//                    override fun onFailure(call: Call<LoveModel>, t: Throwable) {
+//                        Log.e("raya","${t.message}")
+//                    }
+//
+//                })
             }
         }
     }
