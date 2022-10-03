@@ -16,12 +16,17 @@ import androidx.navigation.fragment.findNavController
 import com.example.lovecalculator.model.LoveModel
 import com.example.lovecalculator_5mon.databinding.FragmentMainBinding
 import com.example.lovecalculator_5mon.databinding.FragmentSecondBinding
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Response
+import javax.inject.Inject
 
-class MainFragment : Fragment() {
+@AndroidEntryPoint
+class MainFragment  : Fragment() {
     lateinit var binding: FragmentMainBinding
     private val viewModel:LoveViewModel by viewModels()
+    @Inject
+    lateinit var helper: Helper
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,10 +42,14 @@ class MainFragment : Fragment() {
         with(binding){
             calculateBtn.setOnClickListener{
 
-                viewModel.getLiveLoveModel(firstNameEd.text.toString(),secondNameEd.text.toString()).observe(requireActivity(),
-                    Observer {
-                        binding.calculateBtn.text=it.percentage
-                    })
+                with(viewModel) {
+                    getLiveLoveModel(firstNameEd.text.toString(),secondNameEd.text.toString()).observe(
+                        this@MainFragment.viewLifecycleOwner,
+                                Observer {
+                                    binding.calculateBtn.text=it.percentage
+                                    helper.showToast(requireContext())
+                                })
+                }
 //                App.api.calculateLove(firstNameEd.text.toString(),secondNameEd.text.toString()).enqueue(object :
 //                    retrofit2.Callback<LoveModel>{
 //                    override fun onResponse(call: Call<LoveModel>, response: Response<LoveModel>) {

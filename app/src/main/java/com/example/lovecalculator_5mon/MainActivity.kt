@@ -1,22 +1,34 @@
 package com.example.lovecalculator_5mon
 
-import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import com.example.lovecalculator.model.LoveModel
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.example.lovecalculator_5mon.databinding.ActivityMainBinding
-import retrofit2.Call
-import retrofit2.Response
-import javax.security.auth.callback.Callback
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding:ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
+    lateinit var navController: NavController
+
+    @Inject
+    lateinit var prefs: Prefs
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+      navController=  findNavController(R.id.nav_host_fragment_activity_main)
+        prefs.saveState()
+
+        if (prefs.isShown()) {
+            navController.navigate(R.id.boardFragment)
+        }
+        metod()
+
     }
+    private fun metod() {
+
+
     }
+}
