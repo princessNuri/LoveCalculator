@@ -25,6 +25,12 @@
         android:layout_height="wrap_content"
         android:text="Calculate"
         android:textSize="26sp"/>
+    <Button
+        android:id="@+id/switchBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Switch"
+        android:textSize="26sp"/>
 
 
 </LinearLayout>
