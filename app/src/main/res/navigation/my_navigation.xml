@@ -24,4 +24,9 @@
         android:id="@+id/boardFragment"
         android:name="com.example.lovecalculator_5mon.onboard.BoardFragment"
         android:label="BoardFragment" />
+    <activity
+        android:id="@+id/historyActivity"
+        android:name="com.example.lovecalculator_5mon.HistoryActivity"
+        android:label="activity_history"
+        tools:layout="@layout/activity_history" />
 </navigation>

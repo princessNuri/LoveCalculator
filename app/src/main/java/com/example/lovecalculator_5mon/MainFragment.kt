@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.lovecalculator.model.LoveModel
 import com.example.lovecalculator_5mon.databinding.FragmentMainBinding
 import com.example.lovecalculator_5mon.databinding.FragmentSecondBinding
+import com.example.lovecalculator_5mon.room.AppDataBase
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Response
@@ -28,6 +29,8 @@ class MainFragment  : Fragment() {
     private val viewModel:LoveViewModel by viewModels()
     @Inject
     lateinit var helper: Helper
+    @Inject
+    lateinit var dataBase: AppDataBase
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +52,7 @@ class MainFragment  : Fragment() {
                                 Observer {loveData->
                                     binding.calculateBtn.text=loveData.percentage
                                     helper.showToast(requireContext())
-                                    App.appDataBase.loveDao().insert(loveData)
+                                    dataBase.loveDao().insert(loveData)
                                 })
                 }
 //                App.api.calculateLove(firstNameEd.text.toString(),secondNameEd.text.toString()).enqueue(object :
@@ -72,7 +75,7 @@ class MainFragment  : Fragment() {
 //                })
             }
             switchBtn.setOnClickListener{
-                startActivity(Intent(requireContext(),HistoryActivity::class.java))
+                findNavController().navigate(R.id.historyActivity)
             }
         }
     }

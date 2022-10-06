@@ -14,4 +14,8 @@ interface LoveDao {
 
     @Query("SELECT * FROM 'LOVE-HISTORY'")
     fun getAll():LiveData<List<LoveModel>>
+
+    @Query("SELECT * FROM 'LOVE-HISTORY' ORDER BY firstName ASC")
+    fun getAllAtoZ():LiveData<List<LoveModel>>
+
 }
