@@ -15,10 +15,10 @@ class BoardAdapter(var context: Context, private var navController: NavControlle
     : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
     private val boards= arrayListOf<Board>()
     init {
-        boards.add(Board(R.drawable.love1,"Hello)"))
-        boards.add(Board(R.drawable.love2,"Welcome!"))
-        boards.add(Board(R.drawable.love3,"Let's get started!"))
-        boards.add(Board(R.drawable.love2,"Calculate love!"))
+        boards.add(Board(R.raw.love11,"Hello)"))
+        boards.add(Board(R.raw.love22,"Welcome!"))
+        boards.add(Board(R.raw.love33,"Let's get started!"))
+        boards.add(Board(R.raw.love11,"Calculate love!"))
 
     }
     inner class ViewHolder(
@@ -26,7 +26,7 @@ class BoardAdapter(var context: Context, private var navController: NavControlle
     )
         : RecyclerView.ViewHolder(binding.root) {
         fun bind(board: Board) {
-            binding.animationView.setImageResource(board.image)
+            binding.lotti.setAnimation(board.image)
             binding.textTitle.text = board.title
             _binding.btnSkip.setOnClickListener {
                 val prefs= Prefs(context)

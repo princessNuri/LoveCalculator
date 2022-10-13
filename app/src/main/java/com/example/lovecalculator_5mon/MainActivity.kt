@@ -12,19 +12,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private lateinit var prefs:Prefs
  private lateinit    var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView( binding.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
-/*        prefs.saveState()
+        prefs.saveState()
         if (prefs.isShown()){
             navController.navigate(R.id.boardFragment)
         }
-    }*/
+
+    }
         }
-}
